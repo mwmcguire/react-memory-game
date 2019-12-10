@@ -25,6 +25,10 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    preloadImages();
+  }, cards);
+
+  useEffect(() => {
     const resizeListener = window.addEventListener('resize', resizeBoard);
 
     return () => window.removeEventListener('resize', resizeListener);
@@ -38,11 +42,36 @@ export default function Dashboard() {
     } else {
       if (sameCardClicked(id)) return;
       setFlipped([flipped[0], id]);
+      if (isMatch(id)) {
+        setSolved([...solved, flipped[0], id]);
+        resetCards();
+      } else {
+        setTimeout(resetCards, 2000);
+      }
     }
     setFlipped([...flipped, id]);
   };
 
+  const preloadImages = () => {
+    cards.map(card => {
+      const src = `/img/${card.type}.png`;
+      console.log(src);
+      new Image().src = src;
+    });
+  };
+
+  const resetCards = () => {
+    setFlipped([]);
+    setDisabled(false);
+  };
+
   const sameCardClicked = id => flipped.includes(id);
+
+  const isMatch = id => {
+    const clickedCard = cards.find(card => card.id === id);
+    const flippedCard = cards.find(card => flipped[0] === card.id);
+    return flippedCard.type === clickedCard.type;
+  };
 
   const resizeBoard = () => {
     setDimension(
@@ -70,6 +99,7 @@ export default function Dashboard() {
           flipped={flipped}
           handleClick={handleClick}
           disabled={disabled}
+          solved={solved}
         />
       </Paper>
     </div>

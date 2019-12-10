@@ -7,6 +7,7 @@ export default function Card({
   id,
   type,
   flipped,
+  solved,
   height,
   width,
   disabled
@@ -27,7 +28,7 @@ export default function Card({
             width
           }}
           className={flipped ? 'front' : 'back'}
-          src={flipped ? `/img/${type}.png` : 'img/back.png'}
+          src={flipped || solved ? `/img/${type}.png` : 'img/back.png'}
         />
       </div>
     </div>
@@ -39,6 +40,7 @@ Card.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   flipped: PropTypes.bool.isRequired,
+  solved: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   disabled: PropTypes.bool.isRequired
