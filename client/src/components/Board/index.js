@@ -18,8 +18,8 @@ export default function Board({
           key={card.id}
           id={card.id}
           type={card.type}
-          width={dimension / 4.5}
-          height={dimension / 4.5}
+          width={dimension / 4}
+          height={dimension / 4}
           flipped={flipped.includes(card.id)}
           solved={disabled || solved.includes(card.id)}
           handleClick={handleClick}
